@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getSeason } from "../../../src/utils/season";
+import { getSeason } from "../../../src/utils/";
 import type { Season } from "../../../src/models/types";
 
 function mk(year: number, month: number, day: number): Date {
@@ -27,7 +27,7 @@ describe("getSeason util", () => {
   ];
 
   for (const [[y, m, d], expected] of cases) {
-    it(`returns "${expected}" for ${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`, () => {
+    it(`returns "${expected}" for ${y}-${m}-${d}`, () => {
       const date = mk(y, m, d);
       expect(getSeason(date)).toBe(expected);
     });

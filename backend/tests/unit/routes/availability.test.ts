@@ -3,7 +3,7 @@ import express from "express";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import availabilityRouter from "../../../src/routes/availability";
 import availabilityService from "../../../src/services/availabilityService";
-import { AvailableCar } from "../../../src/models/carModel";
+import { AvailableCar } from "../../../src/models/types";
 
 describe("GET /availability", () => {
   let app = express();

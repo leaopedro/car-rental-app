@@ -8,6 +8,11 @@ export type Car = {
   imageURL: string;
 };
 
+export interface AvailableCar extends Car {
+  totalPrice: number;
+  averageDailyPrice: number;
+}
+
 export type Booking = {
   id: string;
   userId: string;

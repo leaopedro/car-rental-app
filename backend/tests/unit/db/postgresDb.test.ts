@@ -1,10 +1,5 @@
 import { describe, it, expect, beforeAll, beforeEach, vi } from "vitest";
-import type {
-  Car,
-  Booking,
-  CreateUserDTO,
-  User,
-} from "../../../src/models/types";
+import type { Car, Booking, CreateUserDTO } from "../../../src/models/types";
 
 const mockMigrateLatest = vi.fn();
 const mockSelect = vi.fn();

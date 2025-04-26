@@ -95,7 +95,7 @@ export default function HomePage() {
       {error && <p className="text-red-600 mb-6 text-center">{error}</p>}
 
       {cars && cars.length === 0 && (
-        <p className="text-gray-600 text-center">No cars available.</p>
+        <p className="text-red-600 my-6 text-center">No cars available.</p>
       )}
 
       {cars && cars.length > 0 && (

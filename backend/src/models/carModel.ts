@@ -1,19 +1,6 @@
 import db from "../db";
-import { Car } from "./types";
-import { getSeason } from "../utils/season";
-
-export interface AvailableCar extends Car {
-  totalPrice: number;
-  averageDailyPrice: number;
-}
-
-function getDatesInRange(start: Date, end: Date): Date[] {
-  const dates: Date[] = [];
-  for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
-    dates.push(new Date(d));
-  }
-  return dates;
-}
+import { getDaysInRange, getSeason } from "../utils";
+import { AvailableCar } from "./types";
 
 export default class CarModel {
   static findAll() {
@@ -22,7 +9,7 @@ export default class CarModel {
 
   static async listAvailable(start: Date, end: Date): Promise<AvailableCar[]> {
     const cars = await db.getAllCars();
-    const dates = getDatesInRange(start, end);
+    const dates = getDaysInRange(start, end);
     const days = dates.length;
     const available: AvailableCar[] = [];
 

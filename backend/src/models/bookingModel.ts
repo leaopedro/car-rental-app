@@ -16,7 +16,7 @@ class BookingModel {
   ): Promise<Booking[]> {
     return db.findBookingsByCarAndDateRange(carId, start, end);
   }
-  static async create(data: Booking): Promise<Booking> {
+  static async create(data: BookingDTO): Promise<Booking> {
     return db.createBookingRecord(data);
   }
 }

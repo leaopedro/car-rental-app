@@ -1,9 +1,6 @@
 import db from "../db";
 import { User, CreateUserDTO } from "./types";
 
-/**
- * Domain model for User operations (backed by DB client)
- */
 export default class UserModel {
   static findById(id: string): Promise<User | null> {
     return db.findUserById(id);
