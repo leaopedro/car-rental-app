@@ -3,11 +3,13 @@ import BookingService from "../../../src/services/bookingService";
 import BookingModel from "../../../src/models/bookingModel";
 import CarModel from "../../../src/models/carModel";
 import UserModel from "../../../src/models/userModel";
+import { sendBookingConfirmation } from "../../../src/external/emailService";
 import type { BookingDTO, Booking } from "../../../src/models/types";
 
 vi.mock("../../../src/models/bookingModel");
 vi.mock("../../../src/models/carModel");
 vi.mock("../../../src/models/userModel");
+vi.mock("../../../src/external/emailService");
 
 describe("BookingService.createBooking", () => {
   const userId = "user-1";
@@ -110,7 +112,7 @@ describe("BookingService.createBooking", () => {
     );
   });
 
-  it("creates booking successfully with correct totalPrice", async () => {
+  it("creates booking successfully and sends confirmation email", async () => {
     vi.mocked(UserModel.findById).mockResolvedValue({
       id: userId,
       email: "a@b.com",
@@ -124,7 +126,7 @@ describe("BookingService.createBooking", () => {
         brand: "A",
         model: "B",
         pricing: [{ season: "mid", pricePerDay: 75 }],
-        imageURL: "",
+        imageURL: "test.jpg",
       },
     ]);
     vi.mocked(BookingModel.create).mockImplementation(async (b: any) => ({
@@ -142,9 +144,19 @@ describe("BookingService.createBooking", () => {
       endDate,
       totalPrice: 75,
     });
+
     expect(BookingModel.create).toHaveBeenCalledWith({
       ...baseRequest,
       totalPrice: 75,
     } as Booking);
+
+    expect(sendBookingConfirmation).toHaveBeenCalledWith(
+      expect.objectContaining({ id: userId, email: "a@b.com" }),
+      expect.objectContaining({ id: carId, brand: "A", model: "B" }),
+      "booking-1",
+      startDate,
+      endDate,
+      75,
+    );
   });
 });
