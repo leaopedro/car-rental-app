@@ -1,3 +1,4 @@
+/// <reference types="vitest/globals" />
 import request from "supertest";
 import app from "../../src/app";
 import dbClient from "../../src/db";

@@ -3,7 +3,7 @@ import express, { Express } from "express";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import bookingRouter from "../../../src/routes/booking";
 import bookingService from "../../../src/services/bookingService";
-import type { BookingDTO, Booking } from "../../../src/models/types";
+import type { Booking } from "../../../src/models/types";
 
 describe("POST /booking", () => {
   let app: Express;

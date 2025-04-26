@@ -12,3 +12,11 @@ export function getSeason(date: Date): Season {
     return "mid";
   return "off";
 }
+
+export function getDaysInRange(start: Date, end: Date): Date[] {
+  const dates: Date[] = [];
+  for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+    dates.push(new Date(d));
+  }
+  return dates;
+}

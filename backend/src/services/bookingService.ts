@@ -1,14 +1,14 @@
-import { BookingDTO, Booking, Car } from "../models/types";
+import { BookingDTO, Booking, Car, User } from "../models/types";
 import BookingModel from "../models/bookingModel";
 import CarModel from "../models/carModel";
 import UserModel from "../models/userModel";
-import { getSeason } from "../utils/season";
+import { getSeason } from "../utils";
 
 class BookingService {
   async createBooking(request: BookingDTO): Promise<Booking> {
     const { userId, carId, startDate, endDate } = request;
 
-    const user = await this.validateUser(userId, endDate);
+    await this.validateUser(userId, endDate);
     await this.checkUserConflicts(userId, startDate, endDate);
     await this.checkCarAvailability(carId, startDate, endDate);
 
@@ -23,7 +23,7 @@ class BookingService {
     return booking;
   }
 
-  private async validateUser(userId: string, endDate: Date) {
+  private async validateUser(userId: string, endDate: Date): Promise<User> {
     const user = await UserModel.findById(userId);
     if (!user) {
       throw new Error("User not found");
@@ -40,7 +40,7 @@ class BookingService {
     userId: string,
     startDate: Date,
     endDate: Date,
-  ) {
+  ): Promise<void> {
     const conflicts = await BookingModel.findByUserAndDateRange(
       userId,
       startDate,
@@ -55,7 +55,7 @@ class BookingService {
     carId: string,
     startDate: Date,
     endDate: Date,
-  ) {
+  ): Promise<void> {
     const conflicts = await BookingModel.findByCarAndDateRange(
       carId,
       startDate,
@@ -75,7 +75,11 @@ class BookingService {
     return car;
   }
 
-  private calculateTotalPrice(car: Car, startDate: Date, endDate: Date) {
+  private calculateTotalPrice(
+    car: Car,
+    startDate: Date,
+    endDate: Date,
+  ): number {
     let totalPrice = 0;
 
     for (

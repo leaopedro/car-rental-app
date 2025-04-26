@@ -13,17 +13,14 @@ export interface AvailableCar extends Car {
   averageDailyPrice: number;
 }
 
-export interface User {
-  id: string;
-  email: string;
-  drivingLicenseValidUntil: Date;
-}
-
 export interface CreateUserDTO {
   email: string;
   drivingLicenseValidUntil: string;
 }
 
+export interface User extends CreateUserDTO {
+  id: string;
+}
 export interface BookingDTO {
   userId: string;
   carId: string;
