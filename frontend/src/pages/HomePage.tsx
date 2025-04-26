@@ -14,7 +14,6 @@ export default function HomePage() {
   const { setBooking, clearBooking } = useBooking();
   const navigate = useNavigate();
 
-  // default to tomorrow / day after
   const tomorrow = new Date();
   tomorrow.setDate(new Date().getDate() + 1);
   const dayAfter = new Date(tomorrow);
@@ -24,14 +23,17 @@ export default function HomePage() {
   const [endDate, setEndDate] = useState(formatDate(dayAfter));
   const [cars, setCars] = useState<AvailableCar[] | null>(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // <-- added loading state
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
     setCars(null);
+    setLoading(true);
 
     if (!startDate || !endDate) {
       setError("Please select both dates.");
+      setLoading(false);
       return;
     }
 
@@ -40,6 +42,8 @@ export default function HomePage() {
       setCars(data);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Booking failed.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -86,9 +90,10 @@ export default function HomePage() {
         />
         <button
           type="submit"
-          className="bg-sky-500 text-white w-full sm:w-auto self-center mt-3 rounded px-6 py-2 hover:bg-sky-600 transition"
+          disabled={loading}
+          className="bg-sky-500 text-white w-full sm:w-auto self-center mt-3 rounded px-6 py-2 hover:bg-sky-600 transition disabled:opacity-50"
         >
-          Search
+          {loading ? "Searching..." : "Search"}
         </button>
       </form>
 
