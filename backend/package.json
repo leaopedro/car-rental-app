@@ -1,0 +1,55 @@
+{
+  "name": "carental-backend",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "seed": "npx knex migrate:latest && npx knex seed:run",
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev:inmemory": "DB_CLIENT=inmemory npm run dev",
+    "dev:postgres": "DB_CLIENT=postgres npm run dev",
+    "start": "node dist/index.js",
+    "test:unit": "vitest run --reporter verbose tests/unit",
+    "test:integration": "DB_CLIENT=inMemory vitest run --reporter verbose tests/integration",
+    "test": "npm run test:unit && npm run test:integration"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.18.2",
+    "pg": "^8.15.1",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/knex": "^0.16.1",
+    "@types/node": "^18.19.87",
+    "@types/pg": "^8.11.13",
+    "@types/supertest": "^6.0.3",
+    "@types/uuid": "^10.0.0",
+    "@vitest/coverage-c8": "^0.32.0",
+    "cross-env": "^7.0.3",
+    "knex": "^3.1.0",
+    "supertest": "^7.1.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.6",
+    "vitest": "^0.32.4"
+  },
+  "vitest": {
+    "globals": true,
+    "environment": "node",
+    "coverage": {
+      "reporter": [
+        "text",
+        "lcov"
+      ]
+    },
+    "include": [
+      "src/**/*.test.ts",
+      "src/**/*.spec.ts"
+    ]
+  }
+}
