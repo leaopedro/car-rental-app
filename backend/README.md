@@ -19,6 +19,8 @@ cp .env.example .env
 
 Key vars:
 
+- `SEND_CONFIRMATION_EMAIL`: enable sending confirmation emails (configure Resend API key)
+- `RESEND_API_KEY`: your API key from resend.com
 - `DB_CLIENT`: `inmemory` or `postgres`
 - When using Postgres:
   - `PGHOST`
