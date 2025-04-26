@@ -181,7 +181,7 @@ export default function BookingPage() {
             disabled={loading || !quoteFetched}
             className="w-full bg-sky-500 text-white rounded px-4 py-2 disabled:opacity-50"
           >
-            Confirm Booking
+            {loading ? "Confirming..." : "Confirm Booking"}
           </button>
           <button
             type="button"
